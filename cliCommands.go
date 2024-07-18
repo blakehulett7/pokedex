@@ -16,9 +16,15 @@ func commandExit() {
 }
 
 func commandHelp() {
-	fmt.Println("Welcome to the pokedex!")
+	fmt.Println("\nWelcome to the pokedex!")
 	fmt.Println("")
-	fmt.Println("Available Commands:")
+	fmt.Println("-- Available Commands --")
+	fmt.Println("")
+	commandMap := getCommands()
+	for _, command := range commandMap {
+		fmt.Println(command.name + ": " + command.description)
+	}
+	fmt.Println("")
 }
 
 func getCommands() map[string]cliCommand {
