@@ -1,6 +1,7 @@
 package main
 
 import (
+	"./internal/api/"
 	"fmt"
 	"os"
 )
@@ -27,17 +28,35 @@ func commandHelp() {
 	fmt.Println("")
 }
 
+func commandMap() {
+	return
+}
+
+func commandMapBack() {
+	return
+}
+
 func getCommands() map[string]cliCommand {
 	commandMap := map[string]cliCommand{
 		"exit": cliCommand{
 			name:        "exit",
-			description: "exit the program",
+			description: "Exit the program",
 			command:     commandExit,
 		},
 		"help": cliCommand{
 			name:        "help",
-			description: "display help information",
+			description: "Display a help message",
 			command:     commandHelp,
+		},
+		"map": cliCommand{
+			name:        "map",
+			description: "Explore the world of pokemon",
+			command:     commandMap,
+		},
+		"mapback": cliCommand{
+			name:        "mapback",
+			description: "Go to previous page of the map",
+			command:     commandMapBack,
 		},
 	}
 	return commandMap
