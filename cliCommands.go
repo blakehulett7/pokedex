@@ -1,8 +1,8 @@
 package main
 
 import (
-	"./internal/api/"
 	"fmt"
+	"internal/api"
 	"os"
 )
 
@@ -29,6 +29,7 @@ func commandHelp() {
 }
 
 func commandMap() {
+	api.Fetch("https://pokeapi.co/api/v2/location-area")
 	return
 }
 
