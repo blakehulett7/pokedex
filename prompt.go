@@ -6,6 +6,11 @@ import (
 	"os"
 )
 
+type Config struct {
+	nextURL     string
+	previousURL string
+}
+
 func startPrompt() {
 	commandMap := getCommands()
 	scanner := bufio.NewScanner(os.Stdin)

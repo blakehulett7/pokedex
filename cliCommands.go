@@ -29,7 +29,7 @@ func commandHelp() {
 }
 
 func commandMap() {
-	api.Fetch("https://pokeapi.co/api/v2/location-area")
+	api.Fetch("https://pokeapi.co/api/v2/location-area" + "?offset=0")
 	return
 }
 
@@ -39,22 +39,22 @@ func commandMapBack() {
 
 func getCommands() map[string]cliCommand {
 	commandMap := map[string]cliCommand{
-		"exit": cliCommand{
+		"exit": {
 			name:        "exit",
 			description: "Exit the program",
 			command:     commandExit,
 		},
-		"help": cliCommand{
+		"help": {
 			name:        "help",
 			description: "Display a help message",
 			command:     commandHelp,
 		},
-		"map": cliCommand{
+		"map": {
 			name:        "map",
 			description: "Explore the world of pokemon",
 			command:     commandMap,
 		},
-		"mapback": cliCommand{
+		"mapback": {
 			name:        "mapback",
 			description: "Go to previous page of the map",
 			command:     commandMapBack,

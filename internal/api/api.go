@@ -29,8 +29,10 @@ func Fetch(url string) {
 		fmt.Println("Read Error Occured")
 		return
 	}
-	location := Location{}
-	error = json.Unmarshal(body, &location)
-	fmt.Println(location.Results)
+	locations := Location{}
+	error = json.Unmarshal(body, &locations)
+	for _, location := range locations.Results {
+		fmt.Println(location.Name)
+	}
 	return
 }
