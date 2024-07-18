@@ -7,11 +7,11 @@ import (
 )
 
 type Config struct {
-	nextURL     string
-	previousURL string
+	offset int
 }
 
 func startPrompt() {
+	config := Config{}
 	commandMap := getCommands()
 	scanner := bufio.NewScanner(os.Stdin)
 	for {
@@ -23,7 +23,7 @@ func startPrompt() {
 			continue
 		}
 		command := commandMap[input]
-		command.command()
+		command.command(config)
 	}
 }
 
