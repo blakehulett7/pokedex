@@ -1,5 +1,10 @@
 package main
 
+import (
+	"fmt"
+	"os"
+)
+
 type cliCommand struct {
 	name        string
 	description string
@@ -7,11 +12,13 @@ type cliCommand struct {
 }
 
 func commandExit() {
-	"exit the program!"
+	os.Exit(0)
 }
 
 func commandHelp() {
-	"help me"
+	fmt.Println("Welcome to the pokedex!")
+	fmt.Println("")
+	fmt.Println("Available Commands:")
 }
 
 func getCommands() map[string]cliCommand {
