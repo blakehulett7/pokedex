@@ -5,3 +5,7 @@ go 1.22.3
 require internal/api v1.0.0
 
 replace internal/api => ./internal/api/
+
+require internal/pokecache v1.0.0
+
+replace internal/pokecache => ./internal/pokecache/
