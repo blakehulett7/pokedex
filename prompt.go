@@ -11,7 +11,7 @@ type Config struct {
 }
 
 func startPrompt() {
-	config := Config{}
+	config := Config{offset: 0}
 	commandMap := getCommands()
 	scanner := bufio.NewScanner(os.Stdin)
 	for {
@@ -23,7 +23,7 @@ func startPrompt() {
 			continue
 		}
 		command := commandMap[input]
-		command.command(config)
+		command.command(&config)
 	}
 }
 

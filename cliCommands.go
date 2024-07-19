@@ -9,14 +9,14 @@ import (
 type cliCommand struct {
 	name        string
 	description string
-	command     func(Config)
+	command     func(*Config)
 }
 
-func commandExit(Config) {
+func commandExit(config *Config) {
 	os.Exit(0)
 }
 
-func commandHelp(Config) {
+func commandHelp(config *Config) {
 	fmt.Println("\nWelcome to the pokedex!")
 	fmt.Println("")
 	fmt.Println("-- Available Commands --")
@@ -28,12 +28,18 @@ func commandHelp(Config) {
 	fmt.Println("")
 }
 
-func commandMap(Config) {
-	api.Fetch("https://pokeapi.co/api/v2/location-area" + "?offset=0")
+func commandMap(config *Config) {
+	param := fmt.Sprintf("?offset=%v", config.offset)
+	api.Fetch("https://pokeapi.co/api/v2/location-area" + param)
+	config.offset += 20
 	return
 }
 
-func commandMapBack(Config) {
+func commandMapBack(config *Config) {
+	config.offset -= 40
+	param := fmt.Sprintf("?offset=%v", config.offset)
+	api.Fetch("https://pokeapi.co/api/v2/location-area" + param)
+	config.offset += 20
 	return
 }
 
