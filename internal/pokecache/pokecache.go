@@ -30,3 +30,11 @@ func (c Cache) Add(key string, value []byte) {
 		Val:       value,
 	}
 }
+
+func (c Cache) Get(key string) ([]byte, bool) {
+	value, exists := c.Map[key]
+	if !exists {
+		return nil, false
+	}
+	return value.Val, true
+}
