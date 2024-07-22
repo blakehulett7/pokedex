@@ -30,7 +30,8 @@ func commandHelp(config *Config) {
 
 func commandMap(config *Config) {
 	param := fmt.Sprintf("?offset=%v", config.offset)
-	api.Fetch("https://pokeapi.co/api/v2/location-area" + param)
+	url := "https://pokeapi.co/api/v2/location-area" + param
+	api.Fetch(url)
 	config.offset += 20
 	return
 }

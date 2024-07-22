@@ -49,7 +49,6 @@ func (c Cache) ReapLoop() {
 	ticker := time.NewTicker(c.Interval)
 	for {
 		<-ticker.C
-		fmt.Println("Purging Cache...")
 		c.PurgeCache()
 	}
 }
