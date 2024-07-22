@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
+	"internal/pokecache"
 )
 
 func main() {
 	fmt.Println("Christ is King!")
-	startPrompt()
+	pokecache.NewCache(2)
 }
