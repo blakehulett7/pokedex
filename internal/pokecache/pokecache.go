@@ -27,13 +27,18 @@ func NewCache(intervalSeconds time.Duration) Cache {
 }
 
 func (c Cache) Add(key string, value []byte) {
+	c.Mutex.Lock()
+	defer c.Mutex.Unlock()
 	c.Map[key] = cacheEntry{
 		CreatedAt: time.Now(),
 		Val:       value,
 	}
+	return
 }
 
 func (c Cache) Get(key string) ([]byte, bool) {
+	c.Mutex.Lock()
+	defer c.Mutex.Unlock()
 	value, exists := c.Map[key]
 	if !exists {
 		return nil, false
@@ -46,5 +51,13 @@ func (c Cache) ReapLoop() {
 	for {
 		<-ticker.C
 		fmt.Println("Purging Cache...")
+		c.PurgeCache()
 	}
+}
+
+func (c Cache) PurgeCache() {
+	c.Mutex.Lock()
+	defer c.Mutex.Unlock()
+	fmt.Println("Cache Purged!")
+	return
 }
