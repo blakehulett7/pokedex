@@ -17,8 +17,7 @@ type Cache struct {
 	Interval time.Duration
 }
 
-func NewCache(intervalSeconds time.Duration) Cache {
-	interval := intervalSeconds * 1000000000
+func NewCache(interval time.Duration) Cache {
 	return Cache{
 		Map:      map[string]cacheEntry{},
 		Mutex:    &sync.Mutex{},
@@ -58,6 +57,14 @@ func (c Cache) ReapLoop() {
 func (c Cache) PurgeCache() {
 	c.Mutex.Lock()
 	defer c.Mutex.Unlock()
+	for key, entry := range c.Map {
+		fmt.Println("Checking", key, "Entry...")
+		timePassed := time.Now().Sub(entry.CreatedAt)
+		if timePassed < c.Interval {
+			continue
+		}
+		delete(c.Map, key)
+	}
 	fmt.Println("Cache Purged!")
 	return
 }
