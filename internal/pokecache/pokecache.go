@@ -23,3 +23,10 @@ func NewCache(interval time.Duration) Cache {
 		Interval: interval,
 	}
 }
+
+func (c Cache) Add(key string, value []byte) {
+	c.Map[key] = cacheEntry{
+		CreatedAt: time.Now(),
+		Val:       value,
+	}
+}
