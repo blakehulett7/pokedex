@@ -7,5 +7,6 @@ import (
 
 func main() {
 	fmt.Println("Christ is King!")
-	pokecache.NewCache(2)
+	cache := pokecache.NewCache(20)
+	cache.ReapLoop()
 }

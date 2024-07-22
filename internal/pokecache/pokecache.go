@@ -12,16 +12,18 @@ type cacheEntry struct {
 }
 
 type Cache struct {
-	Map   map[string]cacheEntry
-	Mutex *sync.Mutex
+	Map      map[string]cacheEntry
+	Mutex    *sync.Mutex
+	Interval time.Duration
 }
 
-func NewCache(interval time.Duration) {
-	cache := Cache{
-		Map:   map[string]cacheEntry{},
-		Mutex: &sync.Mutex{},
+func NewCache(intervalSeconds time.Duration) Cache {
+	interval := intervalSeconds * 1000000000
+	return Cache{
+		Map:      map[string]cacheEntry{},
+		Mutex:    &sync.Mutex{},
+		Interval: interval,
 	}
-	cache.reapLoop(interval)
 }
 
 func (c Cache) Add(key string, value []byte) {
@@ -39,11 +41,10 @@ func (c Cache) Get(key string) ([]byte, bool) {
 	return value.Val, true
 }
 
-func (c Cache) reapLoop(intervalSeconds time.Duration) {
-	interval := intervalSeconds * 1000000000
-	ticker := time.NewTicker(interval)
+func (c Cache) ReapLoop() {
+	ticker := time.NewTicker(c.Interval)
 	for {
 		<-ticker.C
-		fmt.Println("Ticks Complete")
+		fmt.Println("Purging Cache...")
 	}
 }
