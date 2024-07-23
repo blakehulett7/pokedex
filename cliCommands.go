@@ -67,6 +67,13 @@ func commandExplore(config *Config, argument string) {
 		fmt.Println("")
 		return
 	}
+	fmt.Println("Exploring", argument)
+	fmt.Println("Found pokemon:")
+	url := "https://pokeapi.co/api/v2/location-area/" + argument
+	data := api.Fetch(url)
+	ReadEncounters(data)
+	fmt.Println("")
+	return
 }
 
 func getCommands() map[string]cliCommand {
