@@ -63,7 +63,8 @@ func commandMapBack(config *Config, argument string) {
 
 func commandExplore(config *Config, argument string) {
 	if argument == "" {
-		fmt.Println("Add a location to explore. Use 'help' for more info!")
+		fmt.Println("\nAdd a location to explore. Use 'help' for more info!")
+		fmt.Println("")
 		return
 	}
 }

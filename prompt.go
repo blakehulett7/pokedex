@@ -51,7 +51,6 @@ func ReadInput() (string, string) {
 	fmt.Print("pokedex > ")
 	prompt.Scan()
 	input := prompt.Text()
-	fmt.Println("input:", input)
 	scanner := bufio.NewScanner(strings.NewReader(input))
 	scanner.Split(bufio.ScanWords)
 	scanner.Scan()
