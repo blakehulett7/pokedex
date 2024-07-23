@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"internal/pokecache"
 	"os"
+	"strings"
 	"time"
 )
 
@@ -17,10 +18,8 @@ func startPrompt() {
 	config := initConfig()
 	go config.cache.ReapLoop()
 	commandMap := getCommands()
-	scanner := bufio.NewScanner(os.Stdin)
-	scanner.Split(bufio.ScanWords)
 	for {
-		input, argument := ReadInput(scanner)
+		input, argument := ReadInput()
 		if !inputValidator(input) {
 			fmt.Println("\nInvalid command, use 'help' to get valid commands!")
 			continue
@@ -47,13 +46,17 @@ func initConfig() Config {
 	}
 }
 
-func ReadInput(scanner *bufio.Scanner) (string, string) {
+func ReadInput() (string, string) {
+	prompt := bufio.NewScanner(os.Stdin)
 	fmt.Print("pokedex > ")
+	prompt.Scan()
+	input := prompt.Text()
+	fmt.Println("input:", input)
+	scanner := bufio.NewScanner(strings.NewReader(input))
+	scanner.Split(bufio.ScanWords)
 	scanner.Scan()
-	input := scanner.Text()
+	command := scanner.Text()
 	scanner.Scan()
 	argument := scanner.Text()
-	fmt.Println(input, "arg:", argument)
-	argument = ""
-	return input, argument
+	return command, argument
 }
