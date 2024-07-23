@@ -67,10 +67,17 @@ func commandExplore(config *Config, argument string) {
 		fmt.Println("")
 		return
 	}
-	fmt.Println("Exploring", argument)
-	fmt.Println("Found pokemon:")
+	fmt.Println("\nExploring", argument, "...")
 	url := "https://pokeapi.co/api/v2/location-area/" + argument
-	data := api.Fetch(url)
+	entry, exists := config.cache.Map[url]
+	if !exists {
+		fmt.Println("Adding to cache...")
+		fetchedData := api.Fetch(url)
+		config.cache.Add(url, fetchedData)
+		entry = config.cache.Map[url]
+	}
+	data := entry.Val
+	fmt.Println("Found pokemon:")
 	ReadEncounters(data)
 	fmt.Println("")
 	return
