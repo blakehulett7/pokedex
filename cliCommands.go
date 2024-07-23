@@ -9,14 +9,14 @@ import (
 type cliCommand struct {
 	name        string
 	description string
-	command     func(*Config)
+	command     func(*Config, string)
 }
 
-func commandExit(config *Config) {
+func commandExit(config *Config, argument string) {
 	os.Exit(0)
 }
 
-func commandHelp(config *Config) {
+func commandHelp(config *Config, argument string) {
 	fmt.Println("\nWelcome to the pokedex!")
 	fmt.Println("")
 	fmt.Println("-- Available Commands --")
@@ -28,7 +28,7 @@ func commandHelp(config *Config) {
 	fmt.Println("")
 }
 
-func commandMap(config *Config) {
+func commandMap(config *Config, argument string) {
 	param := fmt.Sprintf("?offset=%v", config.offset)
 	url := "https://pokeapi.co/api/v2/location-area" + param
 	entry, exists := config.cache.Map[url]
@@ -44,7 +44,7 @@ func commandMap(config *Config) {
 	return
 }
 
-func commandMapBack(config *Config) {
+func commandMapBack(config *Config, argument string) {
 	config.offset -= 40
 	param := fmt.Sprintf("?offset=%v", config.offset)
 	url := "https://pokeapi.co/api/v2/location-area" + param
@@ -75,7 +75,7 @@ func getCommands() map[string]cliCommand {
 		},
 		"map": {
 			name:        "map",
-			description: "Explore the world of pokemon",
+			description: "Find locations in the wonderful world of pokemon",
 			command:     commandMap,
 		},
 		"mapback": {
