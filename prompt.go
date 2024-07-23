@@ -51,11 +51,9 @@ func ReadInput(scanner *bufio.Scanner) (string, string) {
 	fmt.Print("pokedex > ")
 	scanner.Scan()
 	input := scanner.Text()
-	argument := ""
-	if !scanner.Scan() {
-		return input, argument
-	}
 	scanner.Scan()
-	argument = scanner.Text()
+	argument := scanner.Text()
+	fmt.Println(input, "arg:", argument)
+	argument = ""
 	return input, argument
 }

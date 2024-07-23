@@ -61,6 +61,13 @@ func commandMapBack(config *Config, argument string) {
 	return
 }
 
+func commandExplore(config *Config, argument string) {
+	if argument == "" {
+		fmt.Println("Add a location to explore. Use 'help' for more info!")
+		return
+	}
+}
+
 func getCommands() map[string]cliCommand {
 	commandMap := map[string]cliCommand{
 		"exit": {
@@ -82,6 +89,11 @@ func getCommands() map[string]cliCommand {
 			name:        "mapback",
 			description: "Go to previous page of the map",
 			command:     commandMapBack,
+		},
+		"explore": {
+			name:        "explore <location>",
+			description: "Explore the various locations in the wonderful world of pokemon",
+			command:     commandExplore,
 		},
 	}
 	return commandMap
