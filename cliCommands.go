@@ -31,7 +31,15 @@ func commandHelp(config *Config) {
 func commandMap(config *Config) {
 	param := fmt.Sprintf("?offset=%v", config.offset)
 	url := "https://pokeapi.co/api/v2/location-area" + param
-	api.Fetch(url)
+	entry, exists := config.cache.Map[url]
+	if !exists {
+		fmt.Println("Adding to cache...")
+		fetchedData := api.Fetch(url)
+		config.cache.Add(url, fetchedData)
+		entry = config.cache.Map[url]
+	}
+	data := entry.Val
+	ReadLocations(data)
 	config.offset += 20
 	return
 }
@@ -39,7 +47,16 @@ func commandMap(config *Config) {
 func commandMapBack(config *Config) {
 	config.offset -= 40
 	param := fmt.Sprintf("?offset=%v", config.offset)
-	api.Fetch("https://pokeapi.co/api/v2/location-area" + param)
+	url := "https://pokeapi.co/api/v2/location-area" + param
+	entry, exists := config.cache.Map[url]
+	if !exists {
+		fmt.Println("Adding to cache...")
+		fetchedData := api.Fetch(url)
+		config.cache.Add(url, fetchedData)
+		entry = config.cache.Map[url]
+	}
+	data := entry.Val
+	ReadLocations(data)
 	config.offset += 20
 	return
 }
