@@ -77,6 +77,11 @@ func commandExplore(config *Config, argument string) {
 		entry = config.cache.Map[url]
 	}
 	data := entry.Val
+	if string(data) == "Not Found" {
+		fmt.Println("No pokemon found... check location name!")
+		fmt.Println("")
+		return
+	}
 	fmt.Println("Found pokemon:")
 	ReadEncounters(data)
 	fmt.Println("")
