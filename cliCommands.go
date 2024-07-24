@@ -88,6 +88,10 @@ func commandExplore(config *Config, argument string) {
 	return
 }
 
+func commandCatch(config *Config, argument string) {
+    pass
+}
+
 func getCommands() map[string]cliCommand {
 	commandMap := map[string]cliCommand{
 		"exit": {
@@ -115,6 +119,11 @@ func getCommands() map[string]cliCommand {
 			description: "Explore the various locations in the wonderful world of pokemon",
 			command:     commandExplore,
 		},
+        "catch": {
+            name: "catch <pokemon>",
+            description: "Attempt to catch a pokemon",
+            command: commandCatch,
+        }
 	}
 	return commandMap
 }

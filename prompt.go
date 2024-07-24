@@ -44,7 +44,7 @@ func initConfig() Config {
 	return Config{
 		cache:   pokecache.NewCache(5 * time.Minute),
 		offset:  0,
-		pokedex: {},
+		pokedex: map[string]Pokemon{},
 	}
 }
 
