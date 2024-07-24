@@ -89,7 +89,30 @@ func commandExplore(config *Config, argument string) {
 }
 
 func commandCatch(config *Config, argument string) {
-    pass
+	if argument == "" {
+		fmt.Println("\nAdd a pokemon to catch. Use 'help' for more info!")
+		fmt.Println("")
+		return
+	}
+	fmt.Println("\nThrowing a pokeball at", argument, "...")
+	url := "https://pokeapi.co/api/v2/pokemon/" + argument
+	entry, exists := config.cache.Map[url]
+	if !exists {
+		fmt.Println("Adding to cache...")
+		fetchedData := api.Fetch(url)
+		config.cache.Add(url, fetchedData)
+		entry = config.cache.Map[url]
+	}
+	data := entry.Val
+	if string(data) == "Not Found" {
+		fmt.Println("No pokemon found... check location name!")
+		fmt.Println("")
+		return
+	}
+	fmt.Println("Found pokemon:")
+	ReadEncounters(data)
+	fmt.Println("")
+	return
 }
 
 func getCommands() map[string]cliCommand {
@@ -119,11 +142,11 @@ func getCommands() map[string]cliCommand {
 			description: "Explore the various locations in the wonderful world of pokemon",
 			command:     commandExplore,
 		},
-        "catch": {
-            name: "catch <pokemon>",
-            description: "Attempt to catch a pokemon",
-            command: commandCatch,
-        }
+		"catch": {
+			name:        "catch <pokemon>",
+			description: "Attempt to catch a pokemon",
+			command:     commandCatch,
+		},
 	}
 	return commandMap
 }
