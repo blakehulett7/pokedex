@@ -10,8 +10,9 @@ import (
 )
 
 type Config struct {
-	cache  pokecache.Cache
-	offset int
+	cache   pokecache.Cache
+	offset  int
+	pokedex map[string]Pokemon
 }
 
 func startPrompt() {
@@ -41,8 +42,9 @@ func inputValidator(input string) bool {
 
 func initConfig() Config {
 	return Config{
-		cache:  pokecache.NewCache(5 * time.Minute),
-		offset: 0,
+		cache:   pokecache.NewCache(5 * time.Minute),
+		offset:  0,
+		pokedex: {},
 	}
 }
 
