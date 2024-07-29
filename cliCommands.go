@@ -94,23 +94,22 @@ func commandCatch(config *Config, argument string) {
 		fmt.Println("")
 		return
 	}
-	fmt.Println("\nThrowing a pokeball at", argument, "...")
 	url := "https://pokeapi.co/api/v2/pokemon/" + argument
 	entry, exists := config.cache.Map[url]
 	if !exists {
-		fmt.Println("Adding to cache...")
+		fmt.Println("\nAdding to cache...")
 		fetchedData := api.Fetch(url)
 		config.cache.Add(url, fetchedData)
 		entry = config.cache.Map[url]
 	}
 	data := entry.Val
 	if string(data) == "Not Found" {
-		fmt.Println("No pokemon found... check location name!")
+		fmt.Println("Pokemon not found... check its name!")
 		fmt.Println("")
 		return
 	}
-	fmt.Println("Found pokemon:")
-	ReadEncounters(data)
+	pokemon := ReadPokemon(data)
+	fmt.Println("Throwing a pokeball at", pokemon.Name, "...")
 	fmt.Println("")
 	return
 }

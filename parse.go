@@ -357,3 +357,9 @@ func ReadEncounters(rawData []byte) {
 		fmt.Println(" -", encounter.Pokemon.Name)
 	}
 }
+
+func ReadPokemon(rawData []byte) Pokemon {
+	pokemon := Pokemon{}
+	json.Unmarshal(rawData, &pokemon)
+	return pokemon
+}
