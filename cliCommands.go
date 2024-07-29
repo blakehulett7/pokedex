@@ -144,7 +144,17 @@ func commandInspect(config *Config, argument string) {
 		return
 	}
 	fmt.Println("")
-	fmt.Println(pokemon)
+	fmt.Println("Name:", pokemon.Name)
+	fmt.Println("Height:", pokemon.Height)
+	fmt.Println("Weight:", pokemon.Weight)
+	fmt.Println("Stats:")
+	for _, stat := range pokemon.Stats {
+		fmt.Println("   -"+stat.Stat.Name+":", stat.BaseStat)
+	}
+	fmt.Println("Types:")
+	for _, pokeType := range pokemon.Types {
+		fmt.Println("   -" + pokeType.Type.Name)
+	}
 	fmt.Println("")
 	return
 }
