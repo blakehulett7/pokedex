@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"internal/api"
+	"math/rand"
 	"os"
 )
 
@@ -94,10 +95,18 @@ func commandCatch(config *Config, argument string) {
 		fmt.Println("")
 		return
 	}
+	_, isCaught := config.pokedex[argument]
+	if isCaught {
+		fmt.Println("")
+		fmt.Println(argument, "has already been caught!")
+		fmt.Println("")
+		return
+	}
 	url := "https://pokeapi.co/api/v2/pokemon/" + argument
 	entry, exists := config.cache.Map[url]
+	fmt.Println("")
 	if !exists {
-		fmt.Println("\nAdding to cache...")
+		fmt.Println("Adding to cache...")
 		fetchedData := api.Fetch(url)
 		config.cache.Add(url, fetchedData)
 		entry = config.cache.Map[url]
@@ -105,11 +114,20 @@ func commandCatch(config *Config, argument string) {
 	data := entry.Val
 	if string(data) == "Not Found" {
 		fmt.Println("Pokemon not found... check its name!")
+		fmt.Println(rand.Int())
 		fmt.Println("")
 		return
 	}
 	pokemon := ReadPokemon(data)
-	fmt.Println("Throwing a pokeball at", pokemon.Name, "...")
+	fmt.Println("Throwing a pokeball at", pokemon.Name+"...")
+	rngCheck := rand.Int31n(1000)
+	if rngCheck < int32(pokemon.BaseExperience) {
+		fmt.Println(pokemon.Name, "escaped!")
+		fmt.Println("")
+		return
+	}
+	fmt.Println(pokemon.Name, "was caught!")
+	config.pokedex[pokemon.Name] = pokemon
 	fmt.Println("")
 	return
 }
