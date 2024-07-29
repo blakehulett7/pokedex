@@ -114,7 +114,6 @@ func commandCatch(config *Config, argument string) {
 	data := entry.Val
 	if string(data) == "Not Found" {
 		fmt.Println("Pokemon not found... check its name!")
-		fmt.Println(rand.Int())
 		fmt.Println("")
 		return
 	}
@@ -128,6 +127,24 @@ func commandCatch(config *Config, argument string) {
 	}
 	fmt.Println(pokemon.Name, "was caught!")
 	config.pokedex[pokemon.Name] = pokemon
+	fmt.Println("")
+	return
+}
+
+func commandInspect(config *Config, argument string) {
+	if argument == "" {
+		fmt.Println("\nAdd a pokemon to inspect, use 'help' for more info!")
+		fmt.Println("")
+		return
+	}
+	pokemon, isCaught := config.pokedex[argument]
+	if !isCaught {
+		fmt.Println("\nYou have not caught that pokemon...")
+		fmt.Println("")
+		return
+	}
+	fmt.Println("")
+	fmt.Println(pokemon)
 	fmt.Println("")
 	return
 }
@@ -163,6 +180,11 @@ func getCommands() map[string]cliCommand {
 			name:        "catch <pokemon>",
 			description: "Attempt to catch a pokemon",
 			command:     commandCatch,
+		},
+		"inspect": {
+			name:        "inspect <pokemon>",
+			description: "Learn more about the pokemon you have caught",
+			command:     commandInspect,
 		},
 	}
 	return commandMap
