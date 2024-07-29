@@ -62,6 +62,20 @@ func commandMapBack(config *Config, argument string) {
 	return
 }
 
+func commandPokedex(config *Config, argument string) {
+	if len(config.pokedex) == 0 {
+		fmt.Println("\nNo pokemon caught yet!")
+		fmt.Println("")
+		return
+	}
+	fmt.Println("\nYour pokedex:")
+	for pokemon := range config.pokedex {
+		fmt.Println("   -", pokemon)
+	}
+	fmt.Println("")
+	return
+}
+
 func commandExplore(config *Config, argument string) {
 	if argument == "" {
 		fmt.Println("\nAdd a location to explore. Use 'help' for more info!")
@@ -180,6 +194,11 @@ func getCommands() map[string]cliCommand {
 			name:        "mapback",
 			description: "Go to previous page of the map",
 			command:     commandMapBack,
+		},
+		"pokedex": {
+			name:        "pokedex",
+			description: "List the pokemon you've already caught",
+			command:     commandPokedex,
 		},
 		"explore": {
 			name:        "explore <location>",
